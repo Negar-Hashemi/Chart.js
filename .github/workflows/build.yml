@@ -30,13 +30,13 @@ jobs:
 
       - name: Install pnpm
         run: |
-          npm install --force
+          npm install -g pnpm
           sudo apt install firefox
 
       - name: Install dependencies using pnpm
-        run: npm install
+        run: pnpm install
 
       - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
         run: |
           echo "Run attempt: ${{ matrix.attempt }}"
-          npm test
+          pnpm test
