@@ -29,12 +29,29 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm
-        run: |
-          npm install -g pnpm
-          sudo apt install firefox
+        run: npm install -g pnpm
 
       - name: Install dependencies using pnpm
         run: pnpm install
+
+      - name: Install Java and Firefox (Ubuntu)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt update
+          sudo apt install -y default-jre firefox
+
+      - name: Install Java and Firefox (macOS)
+        if: runner.os == 'macOS'
+        run: |
+          brew install openjdk firefox
+          echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> $HOME/.zshrc
+          source $HOME/.zshrc
+
+      - name: Install Java and Firefox (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          choco install openjdk firefox
+        shell: powershell
 
       - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
         run: |
