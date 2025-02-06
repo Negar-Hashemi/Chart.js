@@ -29,12 +29,12 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Install pnpm
-        run: npm install -g pnpm
+        run: npm install --force
 
       - name: Install dependencies using pnpm
-        run: pnpm install
+        run: npm install
 
       - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
         run: |
           echo "Run attempt: ${{ matrix.attempt }}"
-          pnpm test
+          npm test
