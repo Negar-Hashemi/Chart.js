@@ -1,3 +1,13 @@
+name: Test on Multiple OS
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
 jobs:
   build:
     runs-on: ${{ matrix.os }}
@@ -5,9 +15,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest]
-        node-version: [18, 20, 22]
-        attempt: [1, 2, 3, 4, 5]
+        os: [ubuntu-latest, macos-latest, windows-latest] # Operating systems to test
+        node-version: [18, 20, 22]                      # Node.js versions to test
+        attempt: [1, 2, 3, 4, 5]                        # Repeat tests 5 times
 
     steps:
       - name: Checkout code
@@ -24,26 +34,26 @@ jobs:
       - name: Install dependencies using pnpm
         run: pnpm install
 
-      - name: Install Dependencies (Ubuntu)
+      - name: Install Java and Firefox (Ubuntu)
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y default-jre firefox xvfb
+          sudo apt install -y default-jre firefox
 
-      - name: Install Dependencies (macOS)
+      - name: Install Java and Firefox (macOS)
         if: runner.os == 'macOS'
         run: |
           brew install openjdk firefox
           echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> $HOME/.zshrc
           source $HOME/.zshrc
 
-      - name: Install Dependencies (Windows)
+      - name: Install Java and Firefox (Windows)
         if: runner.os == 'Windows'
         run: |
           choco install openjdk firefox
         shell: powershell
 
-      - name: Run Tests (Headless Mode)
+      - name: Testing on OS (${{ matrix.os }}) with Node.js (version ${{ matrix.node-version }}) attempt ${{ matrix.attempt }}
         run: |
           echo "Run attempt: ${{ matrix.attempt }}"
-          pnpm test -- --browsers ChromeHeadlessCI,FirefoxHeadlessCI
+          pnpm test
