@@ -38,12 +38,12 @@ jobs:
         if: runner.os == 'Linux'
         run: |
           sudo apt update
-          sudo apt install -y default-jre firefox
+          sudo apt install firefox
 
       - name: Install Java and Firefox (macOS)
         if: runner.os == 'macOS'
         run: |
-          brew install openjdk firefox
+          brew install firefox
           echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> $HOME/.zshrc
           source $HOME/.zshrc
 
