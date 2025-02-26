@@ -44,8 +44,7 @@ jobs:
         if: runner.os == 'macOS'
         run: |
           brew install firefox
-          echo 'export PATH="/opt/homebrew/opt/openjdk/bin:$PATH"' >> $HOME/.zshrc
-          source $HOME/.zshrc
+          echo "FIREFOX_BIN=/Applications/Firefox.app/Contents/MacOS/firefox" >> $GITHUB_ENV
 
       - name: Install Java and Firefox (Windows)
         if: runner.os == 'Windows'
