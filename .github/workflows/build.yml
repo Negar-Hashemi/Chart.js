@@ -65,12 +65,12 @@ jobs:
           os="${{ matrix.os }}"
 
           if [[ "$browser" == "chrome-latest" ]]; then
-            npm run js-test-karma -- --browsers=ChromeHeadless
+            pnpm run js-test-karma -- --browsers=ChromeHeadless
           elif [[ "$browser" == "firefox-latest" ]]; then
-            npm run js-test-karma -- --browsers=FirefoxHeadless
+            pnpm run js-test-karma -- --browsers=FirefoxHeadless
           elif [[ "$browser" == "safari-latest" ]]; then
             if [[ "$os" == "macos-latest" ]]; then
-              npm run js-test-karma -- --browsers=Safari
+              pnpm run js-test-karma -- --browsers=Safari
             else
               echo "Skipping Safari on non-macOS"
             fi
